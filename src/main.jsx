@@ -88,6 +88,8 @@ import { OpportunityProvider } from "./context/OpportunityContext.jsx";
 import { KycProvider } from "./context/KycContext.jsx";
 import KycView from "./components/user/KycView.jsx";
 import AdminViewKyc from "./components/admin/kyc/AdminViewKyc.jsx";
+import { ProductProvider } from "./context/ProductContext.jsx";
+import AdminMembers from "./components/admin/AdminMembers.jsx";
 
 const router = createBrowserRouter([
   {
@@ -185,6 +187,10 @@ const router = createBrowserRouter([
         path: "opportunity",
         element: <ViewOpportunites />,
       },
+      {
+        path: "member",
+        element: <AdminMembers />,
+      },
     ],
   },
   //user routes
@@ -243,6 +249,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
@@ -250,9 +257,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <LeadProvider>
           <OpportunityProvider>
             <KycProvider>
-              <Suspense fallback={<Loader />}>
-                <RouterProvider router={router} />
-              </Suspense>
+              <ProductProvider>
+                <Suspense fallback={<Loader />}>
+                  <RouterProvider router={router} />
+                </Suspense>
+              </ProductProvider>
             </KycProvider>
           </OpportunityProvider>
         </LeadProvider>
